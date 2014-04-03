@@ -65,7 +65,7 @@
         if (info.done) {
           resolve(value);
         } else {
-          Promise.cast(value).then(callNext, callThrow);
+          Promise.resolve(value).then(callNext, callThrow);
         }
       }
 

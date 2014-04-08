@@ -33,3 +33,47 @@ describe("Promise", function() {
     assert.strictEqual(typeof Promise, "function");
   });
 });
+
+describe("no-await async function", function() {
+  it("should return a Promise", function(done) {
+    var called = false;
+
+    async function noAwait(value) {
+      called = true;
+      return value;
+    }
+
+    var promise = noAwait("asdf");
+    assert.strictEqual(called, true);
+
+    promise.done(function(value) {
+      assert.strictEqual(called, true);
+      assert.strictEqual(value, "asdf");
+      done();
+    });
+  });
+});
+
+describe("one-await async function", function() {
+  it("should finish asynchronously", function(done) {
+    var flag1 = false;
+    var flag2 = false;
+
+    async function oneAwait(value) {
+      flag1 = true;
+      var result = await value;
+      flag2 = true;
+      return result;
+    }
+
+    var promise = oneAwait("asdf");
+    assert.strictEqual(flag1, true);
+    assert.strictEqual(flag2, false);
+
+    promise.done(function(value) {
+      assert.strictEqual(flag2, true);
+      assert.strictEqual(value, "asdf");
+      done();
+    });
+  });
+});

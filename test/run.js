@@ -92,6 +92,11 @@ enqueue(convert, [
   "./test/tests.es5.js"
 ]);
 
+enqueue(convert, [
+  "./test/async.es6.js",
+  "./test/async.es5.js"
+]);
+
 enqueue(makeMochaCopyFunction("mocha.js"));
 enqueue(makeMochaCopyFunction("mocha.css"));
 
@@ -113,6 +118,13 @@ enqueue("mocha", [
   "--reporter", "spec",
   "--require", "runtime/dev",
   "./test/tests.es5.js"
+]);
+
+enqueue("mocha", [
+  "--reporter", "spec",
+  "--require", "runtime/dev",
+  "--require", "runtime/promise",
+  "./test/async.es5.js"
 ]);
 
 flush();
